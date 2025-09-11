@@ -1,0 +1,22 @@
+@echo off
+setlocal
+
+:: Password
+set ZIP_PASSWORD=test12345
+
+:: Desktop path
+set DESKTOP=%USERPROFILE%\Desktop
+
+:: Output folder for zips
+set OUTPUT=%DESKTOP%\Zipped
+if not exist "%OUTPUT%" mkdir "%OUTPUT%"
+
+:: Loop through all folders on Desktop
+for /D %%F in ("%DESKTOP%\*") do (
+    echo Zipping folder: %%~nxF
+    "C:\Program Files\7-Zip\7z.exe" a -tzip "%OUTPUT%\%%~nxF.zip" "%%F\*" -p%ZIP_PASSWORD% -mem=AES256
+)
+
+echo.
+echo ✅ All folders zipped with password "%ZIP_PASSWORD%" into: %OUTPUT%
+pause
